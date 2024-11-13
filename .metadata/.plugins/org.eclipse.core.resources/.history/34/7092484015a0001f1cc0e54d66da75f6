@@ -1,0 +1,152 @@
+package controller;
+import java.util.HashMap;
+
+import java.util.Map;
+
+import customExceptions.AccountAlreadyExistException;
+import customExceptions.AccountNotFoundException;
+import customExceptions.InsufficientBalanceException;
+import customExceptions.InvalidPasswordException;
+import customExceptions.MatchedPasswordException;
+import model.User;
+
+public class UserController implements UserControllerInterface{
+//	Map	
+//	In Key we will store account number, and in User we will store object
+	static Map<Integer,User> map= new HashMap<Integer,User>();
+	boolean isAdded=false;
+	
+	@Override
+	public boolean registerUser(User user) {
+		try {
+		if(!map.containsKey(user.getAccountNumber())) {
+			map.put(user.getAccountNumber(), user);
+			isAdded=true;
+		}
+		else {
+			throw new AccountAlreadyExistException();
+		}
+		
+		if(isAdded) {
+			System.out.println("Account Created Succcessfully");
+			return true;
+		}
+		else {
+			System.out.println("Account Not Created....");
+			return false;
+		}}
+		catch(AccountAlreadyExistException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean loginUser(int accountNumber,String pwd) {
+		try {
+		if(map.containsKey(accountNumber)) {
+			User user= map.get(accountNumber);
+			
+			if(user.getPwd().equals(pwd)) {	
+				System.out.println("Login Successfull");
+				return true;
+				
+			}
+			else {
+				throw new InvalidPasswordException();
+			}
+		}
+		else {
+			throw new AccountNotFoundException();
+		}}
+		catch(InvalidPasswordException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		catch(AccountNotFoundException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	
+	
+
+}
+	
+	@Override
+	public double deposit(int accountNumber, double amount) {
+		User user= UserController.map.get(accountNumber);
+		double newBal= user.getBalance()+ amount;
+		user.setBalance(newBal);
+		return user.getBalance();
+	}
+
+	@Override
+	public boolean withdraw(int accountNumber, double amount) {
+		User user= UserController.map.get(accountNumber);
+		try {
+		
+		double bal= user.getBalance();
+		if(amount>bal) {
+			throw new InsufficientBalanceException();
+		}
+		double newBal= bal-amount;
+		user.setBalance(newBal);
+		return true;
+		}
+		catch(InsufficientBalanceException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+
+	@Override
+	public double checkBal(int accountNumber) {
+		User user= UserController.map.get(accountNumber);
+		return user.getBalance();
+	}
+
+	@Override
+	public long changePhoneNumber(int accountNumber, long phoneNumber) {
+		User user= UserController.map.get(accountNumber);
+		user.setPhone(phoneNumber);
+		return user.getPhone();
+	}
+
+	@Override
+	public String changeEmail(int accountNumber, String email) {
+		User user= UserController.map.get(accountNumber);
+		user.setEmail(email);
+		return user.getEmail();
+	}
+
+	@Override
+	public String updateName(int accountNumber, String name) {
+		User user= UserController.map.get(accountNumber);
+		user.setName(name);
+		return user.getName();
+	}
+
+	@Override
+	public boolean changePassword(int accountNumber, String oldPwd,String newPwd) {
+		try {
+		User user= UserController.map.get(accountNumber);
+		if(user.getPwd().equals(oldPwd)) {
+			if(oldPwd.equals(newPwd)) {
+				throw new MatchedPasswordException();
+				
+			}
+			
+			user.setPwd(newPwd);
+			return true;	
+		}
+		else {
+			System.out.println("Old Password is Incorrect, Please Try Again...");
+			return false;
+		}
+		}
+		catch(MatchedPasswordException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+}

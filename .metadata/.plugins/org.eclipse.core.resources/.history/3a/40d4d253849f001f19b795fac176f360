@@ -1,0 +1,7 @@
+package customExceptions;
+
+public class AccountAlreadyExistException extends RuntimeException {
+	public String getMessage() {
+		return "Account Already Exists";
+	}
+}

@@ -1,0 +1,7 @@
+package customExceptions;
+
+public class InvalidPasswordException extends RuntimeException {
+	public String getMessage() {
+		return "Password Doesn't Match...Please try again!!";
+	}
+}

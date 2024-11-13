@@ -1,0 +1,8 @@
+package customExceptions;
+
+public class InvalidOptionException extends RuntimeException {
+	public String getMessage() {
+		return "Please Choose a Correct Option";
+	}
+
+}

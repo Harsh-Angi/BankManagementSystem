@@ -1,0 +1,6 @@
+package customExceptions;
+
+public class InvalidOptionException extends RuntimeException {
+	public String getMessage()
+
+}

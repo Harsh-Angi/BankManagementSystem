@@ -1,0 +1,55 @@
+package controller;
+import controller.UserController;
+import model.User;
+
+public class AccountController implements AccountControllerInterface {
+//	UserControllerInterface controller= new UserController();
+	
+	@Override
+	public double deposit(int accountNumber, double amount) {
+		User user= UserController.map.get(accountNumber);
+		return user.getBalance();
+	}
+
+	@Override
+	public double withdraw(int accountNumber, double amount) {
+		User user= UserController.map.get(accountNumber);
+		return 0;
+	}
+
+	@Override
+	public double checkBal(int accountNumber) {
+		User user= UserController.map.get(accountNumber);
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long changePhoneNumber(int accountNumber, long phoneNumber) {
+		User user= UserController.map.get(accountNumber);
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String changeEmail(int accountNumber, String email) {
+		User user= UserController.map.get(accountNumber);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String updateName(int accountNumber, String name) {
+		User user= UserController.map.get(accountNumber);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void changePassword(int accountNumber, String pwd) {
+		User user= UserController.map.get(accountNumber);
+		// TODO Auto-generated method stub
+
+	}
+
+}

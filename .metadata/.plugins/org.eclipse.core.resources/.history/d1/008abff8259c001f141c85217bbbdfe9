@@ -1,0 +1,23 @@
+package controller;
+import java.util.HashMap;
+import java.util.Map;
+
+import model.User;
+
+public class UserController implements UserControllerInterface{
+//	Map	
+//	In Key we will store account number, and in User we will store object
+	Map<Integer,User> map= new HashMap<Integer,User>();
+	boolean isAdded=false;
+	
+	@Override
+	public void registerUser(User user) {
+		if(!map.containsKey(user.getAccountNumber())) {
+			map.put(user.getAccountNumber(), user);
+		}
+		else {
+			System.out.println("Account Already Exist");
+		}
+	}
+
+}

@@ -1,0 +1,7 @@
+package controller;
+
+import model.User;
+
+public interface UserController {
+	void registerUser(User user);
+}
